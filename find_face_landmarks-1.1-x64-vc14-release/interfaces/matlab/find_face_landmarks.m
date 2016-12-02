@@ -1,0 +1,49 @@
+%FIND_FACE_LANDMARKS Find face landmarks in a video or image sequence
+%   frames = FIND_FACE_LANDMARKS(modelFile, inputPath, scale, track, preview) 
+%   Input:
+%       modelFile - Path to the landmarks model file
+%       inputPath - Path to an image, a video file, a directory containing a
+%       sequence of images, or a posix regular expression
+%       scale [=1] - Each frame will be scaled by this factor. Useful for
+%       detection of small faces. The landmarks will still be in the
+%       original frame's pixel coordinates
+%       track [=1] - Track faces across frames
+%       preview [=1] - Show preview of calculated landmarks
+%   Output:
+%       frames - An array of frames, each frame contains the width and
+%       height of the frame and an array of faces that were detected in
+%       that frame. Each face contain its bounding box in the format 
+%       [x y width height], and its detected landmarks as a n-by-2 matrix
+%       (n is the number of points in the model). 
+%
+%   frames = FIND_FACE_LANDMARKS(modelFile, device, width, height, scale, track)
+%   this is the live version. device is the camera's id to start the 
+%   preview from. width and height are the requested preview resolution.
+%
+%	frames = FIND_FACE_LANDMARKS(inputPath) Load from cache. If inputPath
+%	is a .pb file it will be loaded, else a cache file by the name
+%	<video_name>_landmarks.pb will be searched for in the same directory.
+%
+%   Examples
+%       modelFile = 'shape_predictor_68_face_landmarks.dat';
+%
+%       % single image
+%       frames = find_face_landmarks(modelFile, 'dataset_dir/img01.jpg');
+%
+%       % regular expression (only jpg images)
+%       frames = find_face_landmarks(modelFile, 'dataset_dir/.*jpg');
+%
+%       % all images in a directory
+%       frames = find_face_landmarks(modelFile, 'dataset_dir');
+%
+%       % video file
+%       frames = find_face_landmarks(modelFile, 'video.mp4');
+%
+%       % live camera stream
+%       frames = find_face_landmarks(modelFile, 0);
+%
+%       % Load from cache
+%       frames = find_face_landmarks('video_landmarks.pb');
+%
+%       % Load from cache by searching for 'video_landmarks.pb'
+%       frames = find_face_landmarks('video.mp4');
